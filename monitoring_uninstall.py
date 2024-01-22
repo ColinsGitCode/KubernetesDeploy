@@ -1,4 +1,4 @@
-from utils_tools import CmdExecutor
+from utils_tools import CmdExecutor, AptGetUtils
 from constants import KubePrometheusConst
 
 
@@ -14,7 +14,18 @@ class UninstallMonitoring:
         CmdExecutor.exec_cmd(cmd)
 
     @staticmethod
+    def nginx_uninstall() -> None:
+        nginx_stop_cmd = "nginx -s quit"
+        CmdExecutor.exec_cmd(nginx_stop_cmd)
+
+        rm_cmd = "rm -rf /etc/nginx"
+        CmdExecutor.exec_cmd(rm_cmd)
+
+        AptGetUtils.uninstall(["nginx", "nginx-common"])
+
+    @staticmethod
     def process() -> None:
+        UninstallMonitoring.nginx_uninstall()
         UninstallMonitoring.kubectl_delete_monitoring()
         UninstallMonitoring.remove_kube_prometheus_repo()
 
@@ -22,3 +33,4 @@ class UninstallMonitoring:
 if __name__ == "__main__":
     print("Uninstalling Kube-prometheus.........")
     UninstallMonitoring.process()
+    # UninstallMonitoring.nginx_uninstall()

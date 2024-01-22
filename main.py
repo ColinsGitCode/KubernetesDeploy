@@ -1,6 +1,26 @@
 from utils_tools import UtilsJinja2
+from prerequisites_install import PrerequisitesInstall
+from prerequisites_uninstall import PrerequisitesUninstall
+from minikube_install import InstallMinikube
+from minikube_uninstall import UninstallMinikube
+from monitoring_install import InstallMonitoring
+from monitoring_uninstall import UninstallMonitoring
+
+class K8SClusterDeployment:
+    @staticmethod
+    def install_k8scluster() -> None:
+        PrerequisitesInstall.process()
+        InstallMinikube.process()
+        InstallMonitoring.process()
+
+    @staticmethod
+    def uninstall_k8scluster() -> None:
+        UninstallMonitoring.process()
+        UninstallMinikube.process()
+        PrerequisitesUninstall.process()
+
 
 if __name__ == '__main__':
-    j2_template_path = "templates/prometheus-service.yaml.j2"
-    result_file_path = "/root/KubernetesDeploy/templates/prometheus-service.yaml"
-    UtilsJinja2.create_file_from_template(j2_template_path, {}, result_file_path)
+    K8SClusterDeployment.install_k8scluster()
+    #
+    # K8SClusterDeployment.uninstall_k8scluster()

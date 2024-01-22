@@ -1,0 +1,10 @@
+server {
+       listen       30334;
+       server_name k8s_monitoring;
+
+       location / {
+                            rewrite ^/a/(.*)$ /$1 break;
+                            proxy_pass http://192.168.49.2:30090;
+                            proxy_set_header host $http_host;
+                }
+        }

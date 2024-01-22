@@ -45,6 +45,29 @@ class InstallMonitoring:
         CmdExecutor.exec_cmd(cmd)
 
     @staticmethod
+    def nginx_process() -> None:
+        install_nginx_cmd = "apt-get install -y nginx"
+        CmdExecutor.exec_cmd(install_nginx_cmd)
+
+        grafana_nginx_conf_j2_path = "templates/grafana.conf.j2"
+        grafana_nginx_conf_path = KubePrometheusConst.GRAFANA_NGINX_PROXY_CONF
+        UtilsJinja2.create_file_from_template(grafana_nginx_conf_j2_path, {}, grafana_nginx_conf_path)
+
+        prometheus_nginx_conf_j2_path = "templates/prometheus.conf.j2"
+        prometheus_nginx_conf_path = KubePrometheusConst.PROMETHEUS_NGINX_PROXY_CONF
+        UtilsJinja2.create_file_from_template(prometheus_nginx_conf_j2_path, {}, prometheus_nginx_conf_path)
+
+        alertmanager_nginx_conf_j2_path = "templates/alertmanager.conf.j2"
+        alertmanager_nginx_conf_path = KubePrometheusConst.ALERTMANAGER_NGINX_PROXY_CONF
+        UtilsJinja2.create_file_from_template(alertmanager_nginx_conf_j2_path, {}, alertmanager_nginx_conf_path)
+
+        nginx_test_cmd = "nginx -t"
+        CmdExecutor.exec_cmd(nginx_test_cmd)
+
+        nginx_reload_cmd = "nginx -s reload"
+        CmdExecutor.exec_cmd(nginx_reload_cmd)
+
+    @staticmethod
     def process() -> None:
         """
         The process of installing the monitoring
@@ -55,8 +78,10 @@ class InstallMonitoring:
         """
         InstallMonitoring.kube_prometheus_repo_process()
         InstallMonitoring.kubectl_apply_kube_prometheus()
+        InstallMonitoring.nginx_process()
 
 
 if __name__ == '__main__':
     print("Installing Kubernetes Cluster Monitoring")
     InstallMonitoring.process()
+    # InstallMonitoring.nginx_process()
