@@ -6,6 +6,15 @@ from utils_tools import CmdExecutor
 class UninstallMinikube:
     @staticmethod
     def process() -> None:
+        """
+        The Process of Uninstalling Minikube
+        1. Stop Minikube: minikube stop
+        2. Delete Minikube Nodes: minikube delete
+        3. Remove Minikube Packages: dpkg --remove minikube
+        4. Remove Minikube Files: rm -rf /var/lib/minikube
+
+        :return: None
+        """
         cmd_list = [
             "minikube stop",
             "minikube delete",
