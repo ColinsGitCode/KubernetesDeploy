@@ -15,7 +15,6 @@ class UtilsJinja2:
 
         # Provide data to render the template
         # data = {"name": "John"}
-
         # Render the template with data
         output = template.render(data_dict)
 
@@ -39,12 +38,26 @@ class CmdExecutor:
 class AptGetUtils:
     @staticmethod
     def install(service_list: [str]) -> None:
-        join_str = ",".join(service_list)
+        """
+        apt-get install service1 service2 service3 ....
+
+        :param service_list:
+        :return: None
+        """
         cmd = "apt-get install -y " + " ".join(service_list)
         CmdExecutor.exec_cmd(cmd)
 
     @staticmethod
     def uninstall(service_list: [str]) -> None:
+        """
+        apt-get uninstall
+        1. apt-get remove -y service1 service2 service3....
+        2. apt-get purge -y service1 service2 service3....
+        3. apt-get autoremove -y
+
+        :param service_list:
+        :return: None
+        """
         cmd_list = [
             "apt-get remove -y " + " ".join(service_list),
             "apt-get purge -y " + " ".join(service_list),
