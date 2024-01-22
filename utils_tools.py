@@ -7,6 +7,7 @@ from jinja2 import Environment, FileSystemLoader
 class UtilsJinja2:
     @staticmethod
     def create_file_from_template(j2_path, data_dict, file_path):
+        print("-------------------------------------------------")
         # Create a Jinja2 environment
         env = Environment(loader=FileSystemLoader("."))
 
@@ -22,6 +23,9 @@ class UtilsJinja2:
         with open(file_path, "w") as f:
             f.write(output)
 
+        print("Finish template the file: " + file_path)
+        print("**************************************************")
+
 
 class CmdExecutor:
     @staticmethod
@@ -29,7 +33,9 @@ class CmdExecutor:
         print("-------------------------------------------------")
         print("Executing: " + cmd)
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        print("")
         os.system(cmd)
+        print("")
         print("Finished: " + cmd)
         print("************************************************")
         print()
