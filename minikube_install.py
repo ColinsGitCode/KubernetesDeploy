@@ -1,4 +1,5 @@
 from utils_tools import CmdExecutor
+import time
 
 
 class InstallMinikube:
@@ -15,8 +16,9 @@ class InstallMinikube:
 
         for cmd in cmd_list:
             CmdExecutor.exec_cmd(cmd)
+            time.sleep(30)
 
 
 if __name__ == "__main__":
-    print("Uninstalling Minikube......")
+    print("Installing Minikube......")
     InstallMinikube.process()

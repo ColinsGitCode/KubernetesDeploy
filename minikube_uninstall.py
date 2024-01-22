@@ -1,4 +1,6 @@
-from Utils import CmdExecutor
+import time
+
+from utils_tools import CmdExecutor
 
 
 class UninstallMinikube:
@@ -13,6 +15,7 @@ class UninstallMinikube:
 
         for cmd in cmd_list:
             CmdExecutor.exec_cmd(cmd)
+            time.sleep(10)
 
 
 if __name__ == "__main__":

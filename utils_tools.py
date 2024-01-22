@@ -1,4 +1,6 @@
 import os
+import time
+
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -34,8 +36,25 @@ class CmdExecutor:
         print()
 
 
+class AptGetUtils:
+    @staticmethod
+    def install(service_list: [str]) -> None:
+        join_str = ",".join(service_list)
+        cmd = "apt-get install -y " + " ".join(service_list)
+        CmdExecutor.exec_cmd(cmd)
+
+    @staticmethod
+    def uninstall(service_list: [str]) -> None:
+        cmd_list = [
+            "apt-get remove -y " + " ".join(service_list),
+            "apt-get purge -y " + " ".join(service_list),
+            "apt-get autoremove -y "
+        ]
+        for cmd in cmd_list:
+            CmdExecutor.exec_cmd(cmd)
+
 
 if __name__ == "__main__":
-    j2_template_path = "../templates/prometheus-service.yaml.j2"
-    result_file_path = "/root/KubernetesDeploy/Templates/prometheus-service.yaml"
-    UtilsJinja2.create_file_from_template(j2_template_path, {}, result_file_path)
+    AptGetUtils.install(["nginx"])
+    # time.sleep(20)
+    # AptGetUtils.uninstall(["nginx", "nginx-common"])
