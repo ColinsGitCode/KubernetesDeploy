@@ -80,11 +80,11 @@ class PrerequisitesInstall:
     @staticmethod
     def process() -> None:
         PrerequisitesInstall.install_docker()
-        # PrerequisitesInstall.install_kind()
-        # PrerequisitesInstall.install_yq()
-        # PrerequisitesInstall.install_kubectl()
-        # PrerequisitesInstall.install_skopeo()
-        # PrerequisitesInstall.install_helm()
+        PrerequisitesInstall.install_kind()
+        PrerequisitesInstall.install_yq()
+        PrerequisitesInstall.install_kubectl()
+        PrerequisitesInstall.install_skopeo()
+        PrerequisitesInstall.install_helm()
 
 
 if __name__ == "__main__":
