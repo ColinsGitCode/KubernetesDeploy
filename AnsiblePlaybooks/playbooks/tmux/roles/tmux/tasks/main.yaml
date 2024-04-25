@@ -1,0 +1,21 @@
+---
+
+- name: TMUX | main | include distribution specific variables
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - Ubuntu.yaml
+      paths:
+        - vars
+
+- name: TMUX | main | Include target action
+  include_tasks: "{{ task_item }}"
+  with_first_found:
+    - files:
+        - "{{ the_action }}.yaml"
+#        - "default.yaml"
+      paths:
+        - tasks
+  loop_control:
+    loop_var: task_item

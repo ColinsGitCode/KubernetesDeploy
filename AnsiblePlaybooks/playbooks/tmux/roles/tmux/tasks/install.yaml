@@ -1,0 +1,49 @@
+---
+
+# Execute: apt-get -y install tmux
+- name: TMUX | install | Installation TMUX  by using apt-get
+  apt:
+    name: tmux
+    state: present
+    update_cache: yes
+    force: yes
+#   ail_on_autoremove: yes
+  register: apt_present_action
+  retries: 200
+  delay: 5
+  until: apt_present_action is success or ('Failed to lock apt for exclusive operation' not in apt_present_action.msg and '/var/lib/dpkg/lock' not in apt_present_action.msg and 'No such file or directory' not in apt_present_action.msg)
+
+# Execute git clone
+- name: TMUX | install | Git Clone Repo from Github
+  git:
+      repo: "{{ git_repo_url }}"
+      dest: "{{ tmux_local_path }}"
+
+# Execute: ln -s -f .tmux/.tmux.conf
+- name: TMUX | install | Make link for tmux_config
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    force: yes
+  with_items:
+    - src: "{{ tmux_config_in_repo }}"
+      dest: "{{ tmux_config }}"
+
+# Execute: cp .tmux/.tmux.conf.local .
+- name: TMUX | install | Copy tmux_config_local
+  copy:
+    src: "{{ tmux_config_local_in_repo }}"
+    dest: "{{ tmux_config_local }}"
+    remote_src: yes
+
+# Add custom config into ~/.tmux.conf.local
+- name: TMUX | install | Template new tmux_config_local
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+#    backup: yes
+  with_items:
+    - src: "tmux.conf.local.j2"
+      dest: "{{ tmux_config_local }}"
+

@@ -1,0 +1,39 @@
+---
+
+- name: TMUX | uninstall | Stop all Tmux Sessions
+  command: tmux kill-server
+  ignore_errors: yes
+  register: tmux_kill_server_results
+
+- name: TMUX | uninstall | Show tmux_kill_server_results
+  debug:
+    msg: "{{ tmux_kill_server_results }}"
+
+- name: TMUX | uninstall | Delete all files and directories
+  shell: "rm -rf {{ item }}"
+  become: yes
+  loop: "{{ delete_file_list }}"
+
+#- name: TMUX | uninstall | Delete all files and directories
+#  file:
+#    path: "{{ item }}"
+#    state: absent
+#  become: yes
+#  loop: "{{ delete_file_list }}"
+
+- name: TMUX | uninstall | apt remove
+  block:
+    - name: TMUX | uninstall | Apt remove tmux on Debian(Ubuntu) system
+      apt:
+        name: tmux
+        state: absent
+      register: apt_absent_action
+      retries: 200
+      delay: 5
+      until: apt_absent_action is success or ('Failed to lock apt for exclusive operation' not in apt_absent_action.msg and '/var/lib/dpkg/lock' not in apt_absent_action.msg and 'No such file or directory' not in apt_absent_action.msg)
+#  when: ansible_distribution == 'Debian'
+
+- name: TMUX | uninstall | Show apt_absent_action
+  debug:
+    msg: "{{ apt_absent_action }}"
+

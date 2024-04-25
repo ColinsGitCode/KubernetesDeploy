@@ -1,0 +1,19 @@
+---
+
+# Now is empty
+
+# directories
+work_dir: "/root"
+tmux_local_path: "/root/.tmux"
+
+tmux_config: "/root/.tmux.conf"
+tmux_config_in_repo: "/root/.tmux/.tmux.conf"
+tmux_config_local: "/root/.tmux.conf.local"
+tmux_config_local_in_repo: "/root/.tmux/.tmux.conf.local"
+
+delete_file_list:
+  - " {{ tmux_local_path }}"
+  - " {{ tmux_config }}"
+  - " {{ tmux_config_local }}"
+
+git_repo_url: "https://github.com/gpakosz/.tmux.git"
