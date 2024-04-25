@@ -1,10 +1,10 @@
 server {
-        listen       30333;
-        server_name k8s_monitoring;
+        listen       {{ listen_port }};
+        server_name k8s_monitoring_grafana;
 
         location / {
                     rewrite ^/a/(.*)$ /$1 break;
-                    proxy_pass http://192.168.49.2:30300;
+                    proxy_pass http://{{ proxy_pass_ip }}:{{ proxy_pass_port }};
                     proxy_set_header host $http_host;
                 }
         }

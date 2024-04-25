@@ -1,0 +1,7 @@
+---
+- hosts: local
+  name: local test demo
+  tasks:
+    - name: Check Disk Usage
+      command: df -h
+      register: disk_usage
