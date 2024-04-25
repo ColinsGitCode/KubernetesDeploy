@@ -1,5 +1,6 @@
 import os
-import time
+from tqdm import tqdm
+from time import sleep
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -39,6 +40,11 @@ class CmdExecutor:
         print("Finished: " + cmd)
         print("************************************************")
         print()
+
+    @staticmethod
+    def wait_countdown(seconds: int) -> None:
+        for _ in tqdm(range(seconds), desc="Waiting Countdown"):
+            sleep(1)
 
 
 class AptGetUtils:

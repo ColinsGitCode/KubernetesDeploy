@@ -9,21 +9,33 @@ class InstallMonitoring:
         git_cmd = "git clone " + KubePrometheusConst.KUBE_PROMETHEUS_REPO_URL + " " + KubePrometheusConst.KUBE_PROMETHEUS_LOCAL_PREFIX + "/kube-prometheus"
         CmdExecutor.exec_cmd(git_cmd)
 
-        prometheus_service_j2_path = "templates/prometheus-service.yaml.j2"
-        prometheus_service_yaml_path = KubePrometheusConst.KUBE_PROMETHEUS_REPO_MANIFESTS + "/prometheus-service.yaml"
-        UtilsJinja2.create_file_from_template(prometheus_service_j2_path, {}, prometheus_service_yaml_path)
+        prometheus_service_j2_path = KubePrometheusConst.PROMETHEUS_SERVICE_YAML_TEMPLATE
+        prometheus_service_yaml_path = KubePrometheusConst.KUBE_PROMETHEUS_REPO_MANIFESTS + "/" + KubePrometheusConst.PROMETHEUS_SERVICE_YAML_NAME
+        prometheus_service_yaml_dict = {
+            "type": KubePrometheusConst.PROMETHEUS_SERVICE_YAML_SPEC_TYPE,
+            "nodePort": KubePrometheusConst.PROMETHEUS_SERVICE_YAML_NODEPORT
+        }
+        UtilsJinja2.create_file_from_template(prometheus_service_j2_path, prometheus_service_yaml_dict, prometheus_service_yaml_path)
         cmd = "ls -lht " + prometheus_service_yaml_path
         CmdExecutor.exec_cmd(cmd)
 
-        grafana_service_j2_path = "templates/grafana-service.yaml.j2"
-        grafana_service_yaml_path = KubePrometheusConst.KUBE_PROMETHEUS_REPO_MANIFESTS + "/grafana-service.yaml"
-        UtilsJinja2.create_file_from_template(grafana_service_j2_path, {}, grafana_service_yaml_path)
+        grafana_service_j2_path = KubePrometheusConst.GRAFANA_SERVICE_YAML_TEMPLATE
+        grafana_service_yaml_path = KubePrometheusConst.KUBE_PROMETHEUS_REPO_MANIFESTS + "/" + KubePrometheusConst.GRAFANA_SERVICE_YAML_NAME
+        grafana_service_yaml_dict = {
+            "type": KubePrometheusConst.GRAFANA_SERVICE_YAML_SPEC_TYPE,
+            "nodePort": KubePrometheusConst.GRAFANA_SERVICE_YAML_NODEPORT
+        }
+        UtilsJinja2.create_file_from_template(grafana_service_j2_path, grafana_service_yaml_dict, grafana_service_yaml_path)
         cmd = "ls -lht " + grafana_service_yaml_path
         CmdExecutor.exec_cmd(cmd)
 
-        alertmanager_service_j2_path = "templates/alertmanager-service.yaml.j2"
-        alertmanager_service_yaml_path = KubePrometheusConst.KUBE_PROMETHEUS_REPO_MANIFESTS + "/alertmanager-service.yaml"
-        UtilsJinja2.create_file_from_template(alertmanager_service_j2_path, {}, alertmanager_service_yaml_path)
+        alertmanager_service_j2_path = KubePrometheusConst.ALERTMANAGER_SERVICE_YAML_TEMPLATE
+        alertmanager_service_yaml_path = KubePrometheusConst.KUBE_PROMETHEUS_REPO_MANIFESTS + "/" + KubePrometheusConst.ALERTMANAGER_SERVICE_YAML_NAME
+        alertmanager_service_yaml_dict = {
+            "type": KubePrometheusConst.ALERTMANAGER_SERVICE_YAML_SPEC_TYPE,
+            "nodePort": KubePrometheusConst.ALERTMANAGER_SERVICE_YAML_NODEPORT
+        }
+        UtilsJinja2.create_file_from_template(alertmanager_service_j2_path, alertmanager_service_yaml_dict, alertmanager_service_yaml_path)
         cmd = "ls -lht " + alertmanager_service_yaml_path
         CmdExecutor.exec_cmd(cmd)
 
@@ -51,15 +63,36 @@ class InstallMonitoring:
 
         grafana_nginx_conf_j2_path = "templates/grafana.conf.j2"
         grafana_nginx_conf_path = KubePrometheusConst.GRAFANA_NGINX_PROXY_CONF
-        UtilsJinja2.create_file_from_template(grafana_nginx_conf_j2_path, {}, grafana_nginx_conf_path)
+        grafana_nginx_conf_dict = {
+            "listen_port": KubePrometheusConst.GRAFANA_NGINX_PROXY_LISTEN_PORT,
+            "proxy_pass_ip": KubePrometheusConst.GRAFANA_NGINX_PROXY_PASS_IP,
+            "proxy_pass_port": KubePrometheusConst.GRAFANA_NGINX_PROXY_PASS_PORT
+        }
+        UtilsJinja2.create_file_from_template(grafana_nginx_conf_j2_path,
+                                              grafana_nginx_conf_dict,
+                                              grafana_nginx_conf_path)
 
         prometheus_nginx_conf_j2_path = "templates/prometheus.conf.j2"
         prometheus_nginx_conf_path = KubePrometheusConst.PROMETHEUS_NGINX_PROXY_CONF
-        UtilsJinja2.create_file_from_template(prometheus_nginx_conf_j2_path, {}, prometheus_nginx_conf_path)
+        prometheus_nginx_conf_dict = {
+            "listen_port": KubePrometheusConst.PROMETHEUS_NGINX_PROXY_LISTEN_PORT,
+            "proxy_pass_ip": KubePrometheusConst.PROMETHEUS_NGINX_PROXY_PASS_IP,
+            "proxy_pass_port": KubePrometheusConst.PROMETHEUS_NGINX_PROXY_PASS_PORT
+        }
+        UtilsJinja2.create_file_from_template(prometheus_nginx_conf_j2_path,
+                                              prometheus_nginx_conf_dict,
+                                              prometheus_nginx_conf_path)
 
         alertmanager_nginx_conf_j2_path = "templates/alertmanager.conf.j2"
         alertmanager_nginx_conf_path = KubePrometheusConst.ALERTMANAGER_NGINX_PROXY_CONF
-        UtilsJinja2.create_file_from_template(alertmanager_nginx_conf_j2_path, {}, alertmanager_nginx_conf_path)
+        alertmanager_nginx_conf_dict = {
+            "listen_port": KubePrometheusConst.ALERTMANAGER_NGINX_PROXY_LISTEN_PORT,
+            "proxy_pass_ip": KubePrometheusConst.ALERTMANAGER_NGINX_PROXY_PASS_IP,
+            "proxy_pass_port": KubePrometheusConst.ALERTMANAGER_NGINX_PROXY_PASS_PORT
+        }
+        UtilsJinja2.create_file_from_template(alertmanager_nginx_conf_j2_path,
+                                              alertmanager_nginx_conf_dict,
+                                              alertmanager_nginx_conf_path)
 
         nginx_test_cmd = "nginx -t"
         CmdExecutor.exec_cmd(nginx_test_cmd)
@@ -72,8 +105,9 @@ class InstallMonitoring:
         """
         The process of installing the monitoring
         1. git clone kube-prometheus:
-        2.
-        3.
+        2. kubectl apply kube-prometheus
+        3. Start Nginx Proxy
+
         :return:
         """
         InstallMonitoring.kube_prometheus_repo_process()

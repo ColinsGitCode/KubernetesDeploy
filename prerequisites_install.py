@@ -57,17 +57,25 @@ class PrerequisitesInstall:
 
     @staticmethod
     def install_docker() -> None:
-        install_docker_cmd = "apt-get install docker-ce -y"
-        CmdExecutor.exec_cmd(install_docker_cmd)
+        # install_docker_cmd = "apt-get install docker-ce -y"
+        # CmdExecutor.exec_cmd(install_docker_cmd)
+        #
+        # start_docker_cmd = "service docker start"
+        # CmdExecutor.exec_cmd(start_docker_cmd)
+        #
+        # systemctl_cmd = "systemctl enable docker"
+        # CmdExecutor.exec_cmd(systemctl_cmd)
+        #
+        # docker_version_cmd = "docker version"
+        # CmdExecutor.exec_cmd(docker_version_cmd)
 
-        start_docker_cmd = "service docker start"
-        CmdExecutor.exec_cmd(start_docker_cmd)
+        install_docker_cmd_list = [
+            "curl -fsSL https://get.docker.com -o get-docker.sh",
+            "sh get-docker.sh"
+        ]
 
-        systemctl_cmd = "systemctl enable docker"
-        CmdExecutor.exec_cmd(systemctl_cmd)
-
-        docker_version_cmd = "docker version"
-        CmdExecutor.exec_cmd(docker_version_cmd)
+        for cmd in install_docker_cmd_list:
+            CmdExecutor.exec_cmd(cmd)
 
     @staticmethod
     def process() -> None:

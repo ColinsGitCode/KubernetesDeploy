@@ -40,8 +40,21 @@ class PrerequisitesUninstall:
         stop_docker_cmd = "systemctl stop docker"
         CmdExecutor.exec_cmd(stop_docker_cmd)
 
-        uninstall_docker_cmd = "apt-get remove docker-ce -y"
-        CmdExecutor.exec_cmd(uninstall_docker_cmd)
+        uninstall_docker_cmd_list = [
+            "rm",
+            "apt-get purge -y docker-ce",
+            "apt-get purge -y docker-ce-cli",
+            "apt-get purge -y containerd.io",
+            "apt-get purge -y docker-buildx-plugin",
+            "apt-get purge -y docker-compose-plugin",
+            "apt-get purge -y docker-ce-rootless-extras",
+            "rm -rf /var/lib/docker",
+            "rm -rf /var/lib/containerd",
+            "rm -rf /usr/bin/docker"
+        ]
+        for cmd in uninstall_docker_cmd_list:
+            CmdExecutor.exec_cmd(cmd)
+
 
     @staticmethod
     def process() -> None:
