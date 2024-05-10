@@ -11,8 +11,8 @@
 #      MYSQL_DATABASE: "your_database"
       MYSQL_USER: "{{ mysql_user }}"
       MYSQL_PASSWORD: "{{ mysql_password }}"
-      ports:
-        - "3306:3306"
-      volumes:
+    ports:
+        - "{{ mysql_port|int  }}:{{ mysql_port|int  }}"
+    volumes:
         - "{{ conf_settings }}"
         - "{{ data_settings }}"

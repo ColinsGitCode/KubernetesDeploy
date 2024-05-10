@@ -58,11 +58,11 @@ class PrerequisitesUninstall:
 
     @staticmethod
     def process() -> None:
-        PrerequisitesUninstall.uninstall_helm()
-        PrerequisitesUninstall.uninstall_skopeo()
-        PrerequisitesUninstall.uninstall_kubectl()
-        PrerequisitesUninstall.uninstall_yq()
-        PrerequisitesUninstall.uninstall_kind()
+        # PrerequisitesUninstall.uninstall_helm()
+        # PrerequisitesUninstall.uninstall_skopeo()
+        # PrerequisitesUninstall.uninstall_kubectl()
+        # PrerequisitesUninstall.uninstall_yq()
+        # PrerequisitesUninstall.uninstall_kind()
         PrerequisitesUninstall.uninstall_docker()
 
 

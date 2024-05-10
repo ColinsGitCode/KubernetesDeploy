@@ -10,10 +10,15 @@
   community.docker.docker_image:
     name: mysql
     tag: "{{ mysql_image_tag }}"
-    force: yes
+#    force: yes
     state: absent
 
 
 #- name: MYSQL | Uninstall | Remove data volume
 #  community.docker.docker_container:
 #    name: mysql-server
+
+- name: MYSQL | uninstall | Delete all files and directories
+  shell: "rm -rf {{ item }}"
+  become: yes
+  loop: "{{ prepared_dirs }}"

@@ -14,6 +14,7 @@ prepared_dirs:
 mysql_conf_file: "/opt/mysql/conf.d/my.cnf"
 
 # MySQL Settings
+mysql_port: "3306"
 mysql_root_password: "mysql_root_123"
 mysql_user: "mysql_colin"
 mysql_password: "mysql_colin_123"
@@ -23,3 +24,5 @@ data_settings: "{{ mysql_data_dir }}:/var/lib/mysql"
 # Docker Image Settings
 mysql_image_tag: "latest"
 mysql_image: "mysql:latest"
+
+
