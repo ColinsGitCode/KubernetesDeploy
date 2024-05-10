@@ -1,0 +1,7 @@
+---
+
+- name: MYSQL | Stop | Stop MySQL container
+  community.docker.docker_container:
+    name: mysql-server
+    state: stopped
+

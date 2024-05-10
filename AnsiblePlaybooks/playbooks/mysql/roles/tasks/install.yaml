@@ -1,0 +1,27 @@
+---
+
+# Create MySQL related directories
+- name: MYSQL | install | Make Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ extra_vars['mysql_user'] | default('root') }}"
+    mode: '0755'
+  loop: "{{ prepared_dirs }}"
+
+# Create MySQL config files: my.cnf
+- name: MYSQL | install | Template my.cnf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+#    backup: yes
+  with_items:
+    - src: "my.cnf.j2"
+      dest: "{{ mysql_conf_file }}"
+
+- name: MYSQL | install | Pull MySQL image
+  community.docker.docker_image:
+    name: mysql
+    tag: "{{ mysql_image_tag }}"
+    source: pull
+

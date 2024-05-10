@@ -1,7 +1,5 @@
 ---
 
-# Now is empty
-
 # directories
 work_dir: "/root"
 tmux_local_path: "/root/.tmux"

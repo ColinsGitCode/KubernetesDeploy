@@ -1,3 +1,25 @@
 ---
 
-# Now is empty
+# directories
+mysql_dir: "/opt/mysql"
+mysql_conf_dir: "/opt/mysql/conf.d"
+mysql_data_dir: "/opt/mysql/data"
+
+prepared_dirs:
+  - "{{ mysql_dir }}"
+  - "{{ mysql_conf_dir }}"
+  - "{{ mysql_data_dir }}"
+
+# config files
+mysql_conf_file: "/opt/mysql/conf.d/my.cnf"
+
+# MySQL Settings
+mysql_root_password: "mysql_root_123"
+mysql_user: "mysql_colin"
+mysql_password: "mysql_colin_123"
+conf_settings: "{{ mysql_conf_file }}:/etc/mysql/my.cnf"
+data_settings: "{{ mysql_data_dir }}:/var/lib/mysql"
+
+# Docker Image Settings
+mysql_image_tag: "latest"
+mysql_image: "mysql:latest"
