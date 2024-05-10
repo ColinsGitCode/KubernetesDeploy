@@ -1,0 +1,10 @@
+---
+
+- hosts: local
+  gather_facts: false
+  become: true
+  become_user: root
+  roles:
+    - role: service_template # Need to Change
+      vars:
+        the_action: install

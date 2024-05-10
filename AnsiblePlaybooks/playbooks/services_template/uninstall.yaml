@@ -1,0 +1,10 @@
+---
+
+- hosts: local
+  gather_facts: false
+  become: true
+  become_user: root
+  roles:
+    - role: services_template # need to change
+      vars:
+        the_action: uninstall
