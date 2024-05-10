@@ -1,0 +1,10 @@
+---
+
+- hosts: local
+  gather_facts: false
+  become: true
+  become_user: root
+  roles:
+    - role: mysql
+      vars:
+        the_action: uninstall
