@@ -1,0 +1,49 @@
+---
+
+# Stop Sambd
+- name: SAMBA | uninstall | # Stop Sambd
+  systemd:
+    name: smbd
+    state: stopped
+    register: smbd_status
+
+
+# Show Sambd Status
+- name: SAMBA | uninstall | Show Sambd Status
+  debug:
+    msg: "{{ smbd_status  }}"
+
+
+# Apt Delete Samba
+- name: SAMBA | uninstall | apt remove
+  block:
+    - name: SAMBA | uninstall | Apt remove SAMBA on Debian(Ubuntu) system
+      apt:
+        name: samba
+        state: absent
+      register: apt_absent_action
+      retries: 200
+      delay: 5
+      until: apt_absent_action is success or ('Failed to lock apt for exclusive operation' not in apt_absent_action.msg and '/var/lib/dpkg/lock' not in apt_absent_action.msg and 'No such file or directory' not in apt_absent_action.msg)
+#  when: ansible_distribution == 'Debian'
+
+
+- name: SAMBA | uninstall | Show apt_absent_action
+  debug:
+    msg: "{{ apt_absent_action }}"
+
+
+# Create related directories to share
+- name: SAMBA | uninstall | Delete Directories
+  file:
+    path: "{{ item }}"
+    state: absent
+    owner: "{{ extra_vars['samba_user'] | default('root') }}"
+  loop: "{{ prepared_dirs }}"
+
+
+# Delete User
+- name: SAMBA | install | Create User for Samba
+  user:
+    name: "{{ samba_user_name }}"
+    state: absent

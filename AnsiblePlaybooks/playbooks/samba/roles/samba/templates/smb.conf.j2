@@ -1,0 +1,12 @@
+#这里的 HomeUbuntuSmb 可以自定义，是共享文件夹最后显示的名称
+[HomeUbuntuSmb]
+   # 共享目录
+   path = {{ samba_share_dir }}
+   # 可访问用户白名单, 可多个用户： 用户名1, 用户名2
+   valid users = {{ samba_user_name }}
+   # 可进行写操作的用户白名单，可多个用户： 用户名1, 用户名2
+   write list = {{ samba_user_name }}
+   # 新创建文件的默认权限
+   create mask = 0775
+   # 新创建目录的默认权限
+   directory mask = 0775

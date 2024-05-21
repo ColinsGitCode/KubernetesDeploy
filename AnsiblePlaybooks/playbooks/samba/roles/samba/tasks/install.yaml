@@ -1,0 +1,74 @@
+---
+
+# Create related directories to share
+- name: SAMBA | install | Make Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ extra_vars['samba_user'] | default('root') }}"
+    mode: '0777'
+  loop: "{{ prepared_dirs }}"
+
+
+# Create User
+- name: SAMBA | install | Create User for Samba
+  user:
+    name: "{{ samba_user_name }}"
+    password: "{{ samba_00000 | password_hash('sha512') }}"
+    state: present
+    shell: /bin/bash
+    groups: sudo
+
+
+# Execute: apt-get -y install Samba
+- name: SAMBA | install | Installation SAMBA by using apt-get
+  apt:
+    name: samba
+    state: present
+    update_cache: yes
+    force: yes
+#   ail_on_autoremove: yes
+  register: apt_present_action
+  retries: 200
+  delay: 5
+  until: apt_present_action is success or ('Failed to lock apt for exclusive operation' not in apt_present_action.msg and '/var/lib/dpkg/lock' not in apt_present_action.msg and 'No such file or directory' not in apt_present_action.msg)
+
+
+# Template Config file
+- name: SAMBA | install | Template samba_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+#    backup: yes
+  with_items:
+    - src: "samba.conf.j2"
+      dest: "{{ samba_conf }}"
+
+
+# Start Sambd
+- name: SAMBA | install | # Start Sambd
+  systemd:
+    name: smbd
+    state: started
+    register: smbd_status
+
+
+# Set Password
+- name: SAMBA | install | Set SMB password
+  command: "echo -ne '{{ samba_user_passwd }}\n{{ samba_user_passwd }}\n' | smbpasswd -a -s {{ samba_user_name }}"
+  no_log: true
+  args:
+    creates: "/var/lib/samba/private/passdb.tdb"
+
+
+# Enbale Sambd
+- name: SAMBA | install | # Enbale Sambd
+  systemd:
+    name: smbd
+    enable: yes
+
+
+# Show Sambd Status
+- name: SAMBA | install | Show Sambd Status
+  debug:
+    msg: "{{ smbd_status  }}"

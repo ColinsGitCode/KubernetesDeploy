@@ -1,0 +1,14 @@
+---
+
+# Stop Sambd
+- name: SAMBA | stop | # Stop Sambd
+  systemd:
+    name: smbd
+    state: stopped
+    register: smbd_status
+
+
+# Show Sambd Status
+- name: SAMBA | stop | Show Sambd Status
+  debug:
+    msg: "{{ smbd_status  }}"

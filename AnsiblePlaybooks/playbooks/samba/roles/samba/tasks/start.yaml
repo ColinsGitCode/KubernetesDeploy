@@ -1,0 +1,14 @@
+---
+
+# Start Sambd
+- name: SAMBA | start | # Start Sambd
+  systemd:
+    name: smbd
+    state: started
+    register: smbd_status
+
+
+# Show Sambd Status
+- name: SAMBA | start | Show Sambd Status
+  debug:
+    msg: "{{ smbd_status  }}"

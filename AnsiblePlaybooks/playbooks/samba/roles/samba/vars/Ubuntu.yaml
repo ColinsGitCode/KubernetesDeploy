@@ -1,3 +1,14 @@
 ---
 
-# Now is empty
+# directories
+samba_share_dir: "/opt/samba"
+
+prepared_dirs:
+  - "{{ samba_share_dir }}"
+
+# Samba User Settings
+samba_user_name: "samba"
+samba_user_passwd: "samba_00000"
+
+# conf files
+samba_conf: "/etc/samba/smb.conf"
