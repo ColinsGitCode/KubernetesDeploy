@@ -14,7 +14,7 @@
 - name: SAMBA | install | Create User for Samba
   user:
     name: "{{ samba_user_name }}"
-    password: "{{ samba_00000 | password_hash('sha512') }}"
+    password: "{{ samba_user_passwd | password_hash('sha512') }}"
     state: present
     shell: /bin/bash
     groups: sudo
@@ -41,7 +41,7 @@
     dest: "{{ item.dest }}"
 #    backup: yes
   with_items:
-    - src: "samba.conf.j2"
+    - src: "smb.conf.j2"
       dest: "{{ samba_conf }}"
 
 
@@ -65,7 +65,7 @@
 - name: SAMBA | install | # Enbale Sambd
   systemd:
     name: smbd
-    enable: yes
+    enabled: yes
 
 
 # Show Sambd Status
