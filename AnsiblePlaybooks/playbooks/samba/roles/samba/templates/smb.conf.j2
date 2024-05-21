@@ -7,6 +7,12 @@
    # 可进行写操作的用户白名单，可多个用户： 用户名1, 用户名2
    write list = {{ samba_user_name }}
    # 新创建文件的默认权限
-   create mask = 0775
+   create mask = 0777
    # 新创建目录的默认权限
-   directory mask = 0775
+   directory mask = 0777
+   # 可浏览
+   browsable = yes
+   # 目录可写
+   writable = yes
+   # 非只读
+   read only = no

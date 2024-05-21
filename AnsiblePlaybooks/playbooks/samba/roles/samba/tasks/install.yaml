@@ -55,7 +55,7 @@
 
 # Set Password
 - name: SAMBA | install | Set SMB password
-  command: "echo -ne '{{ samba_user_passwd }}\n{{ samba_user_passwd }}\n' | smbpasswd -a -s {{ samba_user_name }}"
+  command: "echo -ne '{{ samba_user_passwd }}\n{{ samba_user_passwd }}\n' | smbpasswd -a -e {{ samba_user_name }}"
   no_log: true
   args:
     creates: "/var/lib/samba/private/passdb.tdb"
