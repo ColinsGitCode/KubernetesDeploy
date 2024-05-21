@@ -50,7 +50,7 @@
   systemd:
     name: smbd
     state: started
-    register: smbd_status
+  register: smbd_status
 
 
 # Set Password

@@ -5,7 +5,7 @@
   systemd:
     name: smbd
     state: stopped
-    register: smbd_status
+  register: smbd_status
 
 
 # Show Sambd Status

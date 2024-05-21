@@ -5,7 +5,8 @@
   systemd:
     name: smbd
     state: stopped
-    register: smbd_status
+  register: smbd_status
+  ignore_errors: yes
 
 
 # Show Sambd Status
@@ -43,7 +44,7 @@
 
 
 # Delete User
-- name: SAMBA | install | Create User for Samba
+- name: SAMBA | uninstall | Create User for Samba
   user:
     name: "{{ samba_user_name }}"
     state: absent
