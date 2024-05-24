@@ -46,7 +46,7 @@
 
 
 # Start Sambd
-- name: SAMBA | install | # Start Sambd
+- name: SAMBA | install | Start Sambd
   systemd:
     name: smbd
     state: started
@@ -62,7 +62,7 @@
 
 
 # Enbale Sambd
-- name: SAMBA | install | # Enbale Sambd
+- name: SAMBA | install | Enbale Sambd
   systemd:
     name: smbd
     enabled: yes
