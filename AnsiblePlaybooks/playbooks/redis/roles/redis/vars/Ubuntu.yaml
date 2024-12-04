@@ -1,0 +1,10 @@
+---
+
+redis_running_conf_dir: "/etc/redis"
+redis_running_conf_file: "/etc/redis/redis.conf"
+redis_pid_file: "/run/redis/redis-server.pid"
+redis_log_file: "/var/log/redis/redis-server.log"
+redis_data_dir: "/var/lib/redis/"
+
+#  port
+redis_server_port: "6379"
