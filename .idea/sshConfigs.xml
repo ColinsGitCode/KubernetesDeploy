@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="120.26.13.217" id="8e606dbb-4716-40a3-b856-7c5e66a2e096" keyPath="$USER_HOME$/Public/pem_files/ColinAliyunKeyPair.pem" port="22" nameFormat="DESCRIPTIVE" username="root" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>

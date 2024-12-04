@@ -1,0 +1,14 @@
+---
+
+# Start Redis
+- name: REDIS | start | Start Redis
+  systemd:
+    name: redis-server
+    state: started
+  register: redis_status
+
+
+# Show Redis Status
+- name: Redis | start | Show Redis Status
+  debug:
+    msg: "{{ redis_status  }}"

@@ -1,0 +1,15 @@
+---
+
+
+# Execute: apt-get -y install redis-server
+- name: REDIS | install | Installation redis-server by using apt-get
+  apt:
+    name: redis-server
+    state: present
+    update_cache: yes
+    force: yes
+#   ail_on_autoremove: yes
+  register: apt_present_action
+  retries: 200
+  delay: 5
+  until: apt_present_action is success or ('Failed to lock apt for exclusive operation' not in apt_present_action.msg and '/var/lib/dpkg/lock' not in apt_present_action.msg and 'No such file or directory' not in apt_present_action.msg)

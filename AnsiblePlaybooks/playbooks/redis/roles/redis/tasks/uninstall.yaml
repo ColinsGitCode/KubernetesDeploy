@@ -1,0 +1,15 @@
+---
+
+- name: REDIS | uninstall | Ubuntu
+  block:
+    - name: REDIS | uninstall | Ubuntu | Apt remove redis-server on Debian system
+      apt:
+        name: redis-server
+        state: absent
+        purge: yes
+        autoremove: yes
+        autoclean: yes
+      register: apt_absent_action
+      retries: 200
+      delay: 5
+      until: apt_absent_action is success or ('Failed to lock apt for exclusive operation' not in apt_absent_action.msg and '/var/lib/dpkg/lock' not in apt_absent_action.msg and 'No such file or directory' not in apt_absent_action.msg)

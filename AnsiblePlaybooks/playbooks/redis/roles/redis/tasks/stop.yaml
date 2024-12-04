@@ -1,0 +1,14 @@
+---
+
+# Stop Redis
+- name: REDIS | stop | Stop Redis
+  systemd:
+    name: redis-server
+    state: stopped
+  register: redis_status
+
+
+# Show Redis Status
+- name: Redis | stop | Show Redis Status
+  debug:
+    msg: "{{ redis_status  }}"

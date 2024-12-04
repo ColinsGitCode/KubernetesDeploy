@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a777fd27-b11f-4457-b238-3d42d48fc071" name="Deploy2Ecs">
+        <fileTransfer rootFolder="/root" accessType="SFTP" host="120.26.13.217" port="22" sshConfigId="8e606dbb-4716-40a3-b856-7c5e66a2e096" sshConfig="root@120.26.13.217:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
